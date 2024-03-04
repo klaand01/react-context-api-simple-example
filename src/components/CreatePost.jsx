@@ -2,26 +2,36 @@ import { useContext, useState } from "react";
 import { PostContext } from "../App";
 
 const INITIAL_POST = {
-    title: localStorage.getItem("title"),
-    content: localStorage.getItem("content"),
+    title: '',
+    content: '',
+}
+
+const initialPost = () =>
+{
+  if (localStorage.getItem("Post"))
+    return JSON.parse(localStorage.getItem("Post"))
+  
+  return {...INITIAL_POST}
 }
 
 export default function CreatePost() {
-    const [post, setPost] = useState(INITIAL_POST)
+    const [post, setPost] = useState(initialPost)
     const {posts, setPosts} = useContext(PostContext)
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setPost({
+        const updatedPost = {
           ...post,
           [name]: value,
-        })
-      localStorage.setItem(name, value)
+        }
+        setPost(updatedPost)
+      localStorage.setItem("Post", JSON.stringify(updatedPost))
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        localStorage.clear()
+        
+        localStorage.removeItem("Post")
         setPosts([...posts, post])
         setPost(INITIAL_POST)
     }
