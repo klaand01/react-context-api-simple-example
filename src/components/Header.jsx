@@ -1,3 +1,3 @@
-export default function Header({ appName }) {
-    return <h1>{ appName }</h1>
+export default function Header() {
+    return <h1>Next-gen Social Media</h1>
 }

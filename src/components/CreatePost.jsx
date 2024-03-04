@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PostContext } from "../App";
 
 const INITIAL_POST = {
     title: '',
     content: '',
 }
 
-export default function CreatePost({ posts, setPosts }) {
+export default function CreatePost() {
     const [post, setPost] = useState(INITIAL_POST)
+
+  const {posts, setPosts} = useContext(PostContext)
+
+  
 
     const handleChange = (e) => {
         const { name, value } = e.target
