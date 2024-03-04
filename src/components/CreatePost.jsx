@@ -2,16 +2,13 @@ import { useContext, useState } from "react";
 import { PostContext } from "../App";
 
 const INITIAL_POST = {
-    title: '',
-    content: '',
+    title: localStorage.getItem("title"),
+    content: localStorage.getItem("content"),
 }
 
 export default function CreatePost() {
     const [post, setPost] = useState(INITIAL_POST)
-
-  const {posts, setPosts} = useContext(PostContext)
-
-  
+    const {posts, setPosts} = useContext(PostContext)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -19,10 +16,12 @@ export default function CreatePost() {
           ...post,
           [name]: value,
         })
+      localStorage.setItem(name, value)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        localStorage.clear()
         setPosts([...posts, post])
         setPost(INITIAL_POST)
     }
